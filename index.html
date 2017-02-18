@@ -1,0 +1,72 @@
+<html ng-app="paymentsApp">
+  <head>
+    <script src="libs/angular.min.js"></script>
+    <script src="controller.js"></script>
+    <script src="service.js"></script>
+    <script src="components/pagination/pagination.directive.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div ng-controller="paymentsController as paymentsCtrl">
+        <div>
+            <pagination page-size="paymentsCtrl.pageSize"
+                        offset="paymentsCtrl.pageOffset"
+                        list-size="paymentsCtrl.filteredPayments.length">
+            </pagination>
+        </div> 
+      <table id="payments">
+          <tr>
+              <th>Merchant ID</th>
+              <th>Merchant Email</th>
+              <th>
+                  <span>Payment ID </span>
+                  <img src="images/Circle_up.png" ng-click="paymentsCtrl.alterSortOrder('paymentId')"></img>
+                  <img src="images/Circle_down.png" ng-click="paymentsCtrl.alterSortOrder('-paymentId')"></img>
+              </th>
+              <th>
+                  <span>Payment Date </span>
+                  <img src="images/Circle_up.png" ng-click="paymentsCtrl.alterSortOrder('PaymentDate')"></img>
+                  <img src="images/Circle_down.png" ng-click="paymentsCtrl.alterSortOrder('-PaymentDate')"></img>
+              </th>
+              <th>
+                  <span>Amount</span>
+                  <img src="images/Circle_up.png" ng-click="paymentsCtrl.alterSortOrder('amount')"></img>
+                  <img src="images/Circle_down.png" ng-click="paymentsCtrl.alterSortOrder('-amount')"></img>
+              </th>
+              <th>Payment Status</th>
+          </tr>
+          <tr>
+              <td colspan="5">
+                  <input type="text" placeholder="Enter Merchant ID" ng-model="paymentsCtrl.merchantIDFilter">
+              </td>
+              <td>
+                <select ng-model="paymentsCtrl.paymentStatusFilter">
+                    <option value="">Filter Payment Status</option>
+                    <option value="Initiated">Initiated</option>
+                    <option value="Failed">Failed</option>
+                    <option value="Success">Success</option>
+                    <option value="Refunded">Refunded</option>
+                    <option value="Dropped">Dropped</option>
+                </select>
+              </td>
+          </tr>
+          <tr ng-class="$even?'alt':''"
+              ng-repeat ="payment in paymentsCtrl.filteredPayments = (paymentsCtrl.paymentsList
+                          | filter :{merchatId : paymentsCtrl.merchantIDFilter,
+                                    paymentStatus : paymentsCtrl.paymentStatusFilter} 
+                          | orderBy :[paymentsCtrl.sortOrder]
+                          ) | limitTo : paymentsCtrl.pageSize:paymentsCtrl.pageOffset">
+              <td ng-bind = "payment.merchatId"></td>
+              <td ng-bind = "payment.MerchantEmail"></td>
+              <td ng-bind = "payment.paymentId"></td>
+              <td ng-bind = "payment.PaymentDate | date:'mm/dd/yyyy'"></td>
+              <td ng-bind = "payment.amount"></td>
+              <td ng-bind = "payment.paymentStatus"></td>
+          </tr>
+            <tr ng-if="!(paymentsCtrl.filteredPayments.length > 0)">
+                <td colspan="6" style="text-align:center">No Records Found</td>
+            </tr>
+        </table>
+    </div>
+  </body>
+</html>

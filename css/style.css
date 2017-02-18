@@ -1,0 +1,35 @@
+#payments {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#payments td, #payments th {
+    font-size: 1em;
+    border: 1px solid #0070A8;
+    padding: 3px 7px 2px 7px;
+}
+
+#payments th {
+    font-size: 1.1em;
+    text-align: left;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    background-color: #00557F;
+    color: #ffffff;
+}
+#payments tr td {
+   color: #00496B; 
+}
+#payments tr.alt td {
+    background-color: #E1EEF4;
+}
+
+#pagination-container {
+    float: right;
+    margin: 25px 0px;
+}
+
+#pagination-container .drop-down {
+    margin-left : 70px;
+}
